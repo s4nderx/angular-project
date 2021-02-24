@@ -12,6 +12,8 @@ import { LoginComponent } from './login/login.component';
 /* My Modules */
 import { ContaRouterModule } from './conta.route';
 import { ContaAppComponent } from './conta.app.component';
+import { ContaService } from './services/conte.service';
+import { CustomFormsModule } from 'ngx-custom-validators';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,11 @@ import { ContaAppComponent } from './conta.app.component';
     ContaRouterModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CustomFormsModule
+  ],
+  providers: [
+    ContaService
   ]
 })
 export class ContaModule { }
