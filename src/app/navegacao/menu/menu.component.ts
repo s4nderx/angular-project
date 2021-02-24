@@ -6,4 +6,10 @@ import {Component} from '@angular/core';
 })
 export class MenuComponent{
 
+  public isCollapsed: boolean;
+
+  constructor(){
+    this.isCollapsed = true;
+  }
+
 }
