@@ -28,6 +28,8 @@ export class CadastroComponent implements OnInit, AfterViewInit {
   geneticValidator: GenericValidator = new GenericValidator(this.validationMessages);
   displayMessage: DisplayMessage = {};
 
+  mudancasNaoSalvas: boolean = false;
+
   constructor(private fb: FormBuilder, private contaService: ContaService, private router: Router, private toastr: ToastrService) {
     this.validationMessages = {
       email: {
@@ -67,8 +69,10 @@ export class CadastroComponent implements OnInit, AfterViewInit {
 
     merge(...controlBlurs).subscribe(() => {
       this.displayMessage = this.geneticValidator.processarMensagens(this.cadastroForm);
-    })
+      this.mudancasNaoSalvas = true;
+    });
 
+    this.mudancasNaoSalvas = false;
   }
 
   adicionarConta() {
@@ -94,7 +98,7 @@ export class CadastroComponent implements OnInit, AfterViewInit {
     this.contaService.LocalStorage.salvarDadosLocaisUsuario(response);
 
     let toast = this.toastr.success('Registro realizado com Sucesso!', 'Bem vindo!!')
-    
+
     if(toast){
       toast.onHidden
       .subscribe(() => {
