@@ -12,7 +12,7 @@ import { LoginComponent } from './login/login.component';
 /* My Modules */
 import { ContaRouterModule } from './conta.route';
 import { ContaAppComponent } from './conta.app.component';
-import { ContaService } from './services/conte.service';
+import { ContaService } from './services/conta.service';
 import { CustomFormsModule } from 'ngx-custom-validators';
 
 @NgModule({

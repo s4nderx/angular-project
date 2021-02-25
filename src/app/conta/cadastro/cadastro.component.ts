@@ -2,10 +2,11 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChildren } from '@ang
 import { FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
 import { DisplayMessage, GenericValidator, ValidationMessages } from 'src/app/utils/generic-form-validation';
 import { Usuario } from '../models/usuario.model';
-import { ContaService } from '../services/conte.service';
+import { ContaService } from '../services/conta.service';
 
 import { CustomValidators } from 'ngx-custom-validators';
 import { fromEvent, merge, Observable, of, scheduled } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cadastro',
@@ -24,7 +25,7 @@ export class CadastroComponent implements OnInit, AfterViewInit {
   geneticValidator: GenericValidator = new GenericValidator(this.validationMessages);
   displayMessage: DisplayMessage = {};
 
-  constructor(private fb: FormBuilder, private contaService: ContaService) {
+  constructor(private fb: FormBuilder, private contaService: ContaService, private router: Router) {
     this.validationMessages = {
       email: {
         required: 'informe o e-mail',
@@ -68,13 +69,32 @@ export class CadastroComponent implements OnInit, AfterViewInit {
   }
 
   adicionarConta() {
+
     if (this.cadastroForm.dirty && this.cadastroForm.valid){
 
       this.usuario = Object.assign({}, this.usuario, this.cadastroForm.value);
 
-      this.contaService.cadastrarUsuario(this.usuario);
+      this.contaService.cadastrarUsuario$(this.usuario)
+      .subscribe(
+        sucesso => this.processarSucesso(sucesso),
+        falha => this.processarFalha(falha)
+      );
 
     }
+
+  }
+
+  processarSucesso(response: any) {
+    this.cadastroForm.reset();
+    this.errors = [];
+
+    this.contaService.LocalStorage.salvarDadosLocaisUsuario(response);
+
+    this.router.navigate(['/home']);
+  }
+
+  processarFalha(fail: any){
+    this.errors = fail.error.errors;
   }
 
 }
