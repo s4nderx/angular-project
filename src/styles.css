@@ -1,3 +1,5 @@
+@import '~ngx-toastr/toastr';
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;
