@@ -1,7 +1,8 @@
 export class LocalStorageUtils {
 
   public obterUsuario() {
-      return JSON.parse(localStorage.getItem('devio.user') || '');
+      const user = localStorage.getItem('devio.user')
+      return user ? JSON.parse(user) : ''
   }
 
   public salvarDadosLocaisUsuario(response: any) {
@@ -14,8 +15,8 @@ export class LocalStorageUtils {
       localStorage.removeItem('devio.user');
   }
 
-  public obterTokenUsuario(): string {
-      return localStorage.getItem('devio.token') || '';
+  public obterTokenUsuario(): any {
+      return localStorage.getItem('devio.token') || null;
   }
 
   public salvarTokenUsuario(token: string) {
